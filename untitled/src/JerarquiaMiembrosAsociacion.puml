@@ -1,0 +1,4 @@
+@startuml
+Event <|-- Member
+Member <|-- BoardMember
+@enduml

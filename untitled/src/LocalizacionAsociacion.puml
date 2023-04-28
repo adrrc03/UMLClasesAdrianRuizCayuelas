@@ -1,0 +1,14 @@
+@startuml
+
+AAUOC o-down--- Location
+AAUOC o-down-- Person
+AAUOC o-down--- Event
+Location -right-  Event
+Event -right- Member
+Person <|-down- Member
+Event <|-- BoardMeeting
+Member <|-- BoardMember
+BoardMeeting -- BoardMember
+Conference -right- BoardMeeting
+Conference -up- Person
+@enduml

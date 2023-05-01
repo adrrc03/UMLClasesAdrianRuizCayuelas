@@ -776,4 +776,34 @@ max_attendees : Integer
 }
 
 @enduml</code></pre><p id="848afc0d-69f9-46c5-a493-56a444eb19f0" class=""><strong><strong><strong><strong><strong><strong><strong>Resultado: </strong></strong></strong></strong></strong></strong></strong></p><figure id="8f7b6d20-492f-41e5-9802-5e818e79303f" class="image"><a href="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%2010.png"><img style="width:781px" src="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%2010.png"/></a></figure><p id="b6b7e6cd-1c0f-42f7-b3c9-afc3acde1984" class="">
-</p><h2 id="3b4d8cd7-a077-403a-8831-5949426fb629" class="">4) Inclusión de la cardinalidad y navegabilidad de las relaciones</h2></div></article></body></html>
+</p><h2 id="3b4d8cd7-a077-403a-8831-5949426fb629" class="">4) Inclusión de la cardinalidad y navegabilidad de las relaciones</h2><p id="76f61f21-472f-4eb5-b723-15976f1ea106" class="">En el siguiente diagrama, se han eliminado los métodos e incluido las navegabilidades
+(en este caso, todas son bidireccionales, debido a que no se nos ha comunicado ningún tipo de relación y/o acceso a la información de una clase a otra), y las cardinalidades de dichas relaciones.</p><p id="fb05e11c-35e4-421d-8abf-202723f74ae2" class="">
+</p><ol type="1" id="da1891cf-22c1-44f1-966b-70f3e680df20" class="numbered-list" start="1"><li>Para este diagrama reutilizaremos nuevamente el codigo utilizado en el apartado anterior. Por tanto crearemos un nuevo fichero llamado<strong><strong><strong> “CardenalidadNavegabilidad” </strong></strong></strong>e eliminaremos las clases del codigo. Este debería de asemejarse al siguiente: </li></ol><pre id="282788db-0248-4d9f-ad83-1a5bf6b47a98" class="code"><code>@startuml
+
+AAUOC o-down--- Location
+AAUOC o-down-- Person
+AAUOC o-down--- Event
+Location -right-  Event : isLocated in
+Event -right- Member : attends to
+Person &lt;|-down- Member
+Event &lt;|-- BoardMeeting
+Member &lt;|-- BoardMember
+BoardMeeting -- BoardMember : attends to
+Conference -right- BoardMeeting
+Conference -up- Person : attends to
+
+@enduml</code></pre><ol type="1" id="e9967737-3aff-4d3d-8ee2-3673f411a937" class="numbered-list" start="2"><li>Para esto la inclusión de la cardinalidad se deben usar comillas dobles &quot;&quot; en cada lado de la relación., siguiendo la siguiente estructura:</li></ol><pre id="30afd331-e479-45fa-bbef-cee052b70563" class="code"><code>Class01 &quot;1&quot; *-- &quot;many&quot; Class02 : contains</code></pre><ol type="1" id="bc3700eb-e2f4-4cfc-99b8-cbfc5324c596" class="numbered-list" start="3"><li>Ahora rellenaremos las cardinalidades, quedando el codigo algo similar al siguiente: </li></ol><pre id="071e94f6-6ad6-4854-bb6f-5aba0198d832" class="code"><code>@startuml
+
+AAUOC o-down--- &quot;0..*&quot; Location
+AAUOC o-down-- &quot;0..*&quot; Person
+AAUOC o-down--- &quot;0..*&quot; Event
+Location &quot;1&quot; -right- &quot;0..*&quot; Event : isLocated in
+Event &quot;0..*&quot; -right- &quot;0..*&quot; Member : attends to
+Person &lt;|-down- Member
+Event &lt;|-- BoardMeeting
+Member &lt;|-- BoardMember
+BoardMeeting &quot;0..*&quot; -- &quot;0..*&quot; BoardMember : attends to
+Conference -right- BoardMeeting
+Conference &quot;0..*&quot; -up- &quot;0..*&quot; Person : attends to
+
+@enduml</code></pre><p id="60266dae-b3c2-4c9a-89af-33bb977eae8b" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Resultado: </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><figure id="b34e88e8-d1c7-4907-89a2-84e3d420cb80" class="image"><a href="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%2011.png"><img style="width:579px" src="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%2011.png"/></a></figure></div></article></body></html>

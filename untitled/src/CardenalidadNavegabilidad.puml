@@ -1,0 +1,15 @@
+@startuml
+
+AAUOC o-down--- "0..*" Location
+AAUOC o-down-- "0..*" Person
+AAUOC o-down--- "0..*" Event
+Location "1" -right- "0..*" Event : isLocated in
+Event "0..*" -right- "0..*" Member : attends to
+Person <|-down- Member
+Event <|-- BoardMeeting
+Member <|-- BoardMember
+BoardMeeting "0..*" -- "0..*" BoardMember : attends to
+Conference -right- BoardMeeting
+Conference "0..*" -up- "0..*" Person : attends to
+
+@enduml

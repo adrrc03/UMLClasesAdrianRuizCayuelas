@@ -11,4 +11,5 @@ Member <|-- BoardMember
 BoardMeeting -- BoardMember
 Conference -right- BoardMeeting
 Conference -up- Person
+
 @enduml

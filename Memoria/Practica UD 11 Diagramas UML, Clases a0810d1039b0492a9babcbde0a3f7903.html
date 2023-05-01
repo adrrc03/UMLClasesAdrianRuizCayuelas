@@ -675,4 +675,105 @@ ayudarles a confeccionar un programa que les permita gestionar a sus asociados, 
 que se relacionan con el resto de clases. Nuevamente procederemos a desarrollar el esquema. Este esquema lo llamaremos<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> “LocalizacionAsociacion” </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>y debería de ser similar a este:</p><figure id="2c7bdbb2-f871-4ad2-b287-bf01dcb6eb9e" class="image"><a href="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%207.png"><img style="width:958px" src="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%207.png"/></a></figure><p id="3dfa2f1f-146b-4548-8f39-a9e40e6f16ba" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Resultado: </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><figure id="5c2383c2-8291-4395-b86c-8ee82e5a829e" class="image"><a href="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%208.png"><img style="width:491px" src="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%208.png"/></a></figure><h2 id="fee6fb75-b8b5-46b4-81ac-417e44bf02d4" class="">3) Inclusión de atributos y metodos</h2><p id="24400ee4-f1d1-4ade-95f0-a0fa70b1cb28" class="">Una vez creado el modelo de datos, completamos las clases con sus atributos y los métodos más relevantes (quedan fuera de este diagrama los métodos getters y setters, así como los métodos constructores de cada clase).</p><p id="5187d190-2849-4f10-b4b0-df09a2bab455" class="">
 </p><p id="f9cc3de1-1d95-4a64-bff5-0807e0012077" class="">La asociación necesitará un conjunto de métodos para añadir nuevos eventos, personas y
 localizaciones al sistema (métodos newX de la clase AAUOC), así como también un método para informar a los miembros de la convocatoria de un evento (método informEvent). Al mismo tiempo, se dice que los usuarios necesitarán confirmar la asistencia a los eventos (método register, que deberá almacenar los asistentes por orden y controlar el número máximo de éstos si fuera necesario).</p><p id="0eeaeadf-5615-4dff-ac03-26d6a0b12c59" class="">
-</p></div></article></body></html>
+</p><ol type="1" id="410d2085-30cb-4ccc-ba31-dca27fa3af29" class="numbered-list" start="1"><li>Lo primero que haremos para generar el diagrama será crear un nuevo archivo PlantUML, que yo en este caso he llamado<strong><strong><strong><strong><strong><strong><strong><strong><strong> “InclusionAtributosMetodos”</strong></strong></strong></strong></strong></strong></strong></strong></strong></li></ol><figure id="de986aeb-9bb0-4d64-ac94-61ddc49b2f7c" class="image"><a href="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%209.png"><img style="width:415px" src="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%209.png"/></a></figure><ol type="1" id="28ab1b94-a7b3-44d6-b1d4-240e8e8cc61f" class="numbered-list" start="2"><li>Puesto que este esquema parte del anterior podremos reutilizar el codigo, y así lo haremos.</li></ol><pre id="3a39611d-0553-4496-b8be-83b5f92ebb64" class="code"><code>@startuml
+AAUOC o-down--- Location
+AAUOC o-down-- Person
+AAUOC o-down--- Event
+Location -right-  Event
+Event -right- Member
+Person &lt;|-down- Member
+Event &lt;|-- BoardMeeting
+Member &lt;|-- BoardMember
+BoardMeeting -- BoardMember
+Conference -right- BoardMeeting
+Conference -up- Person
+@enduml</code></pre><ol type="1" id="25edc8fe-a67c-4421-a28c-265027e33558" class="numbered-list" start="3"><li>Ahora deberemos de incluir las clases dentro del codigo, para ello solo deberemos de seguir la siguiente estructura.</li></ol><pre id="5c9f4b2b-31c6-425a-9e3b-3960f6355764" class="code"><code>class &quot;nombreDeLaClase&quot; {
+&quot;tipoDeDato&quot; &quot;nombreDeVariable&quot;
+&quot;nombreMetodo&quot;(&quot;nombreVariableEntrada&quot;:&quot;tipoDeDato&quot;):&quot;tipoDeDatoDevuelto&quot;}</code></pre><ol type="1" id="fca81498-1125-4c37-b63f-77a5d89fc2a0" class="numbered-list" start="4"><li>Ahora rellenamos todas las clases de esa manera y el codigo final debería de lucir similar a esto: </li></ol><pre id="ba8d0f59-9b15-4e36-be46-d1c36cce588b" class="code"><code>@startuml
+
+AAUOC o-down--- Location
+AAUOC o-down-- Person
+AAUOC o-down--- Event
+Location -right-  Event
+Event -right- Member
+Person &lt;|-down- Member
+Event &lt;|-- BoardMeeting
+Member &lt;|-- BoardMember
+BoardMeeting -- BoardMember
+Conference -right- BoardMeeting
+Conference -up- Person
+class AAUOC{
+newLocation(l : Location) : void
+newEvent(e : Event) : void
+newPerson(p : Person) : void
+informEvent(e : Event) : void
+register(m : Member,e : Event) : void
+}
+class Location{
+description : String
+address : String
+}
+
+class Event{
+date : Date
+description : String
+assign(l : Location) : void
+}
+
+class Person{
+name : String
+}
+
+class Member{
+e-mail : String
+}
+
+class Conference{
+max_attendees : Integer
+}
+
+@enduml</code></pre><ol type="1" id="be76bcbc-cdeb-4315-9c59-2818f5a33dd6" class="numbered-list" start="5"><li>Ahora deberemos marcar las relaciones, para esto usaremos la siguiente estructura:</li></ol><pre id="eb7445d6-699b-4d07-a4ce-f7d1dfc3ea63" class="code"><code>&quot;claseA&quot; -- &quot;claseB&quot; : &quot;nombreRelacion&quot;</code></pre><ol type="1" id="29b287ae-c464-4f52-b716-d2c0b7984ac1" class="numbered-list" start="6"><li>Ahora procederemos a marcar todas las relaciones, el codigo final debería de parecerse al siguiente:</li></ol><pre id="855218f5-f852-48f0-9de0-9697c3287611" class="code"><code>@startuml
+
+AAUOC o-down--- Location
+AAUOC o-down-- Person
+AAUOC o-down--- Event
+Location -right-  Event : isLocated in
+Event -right- Member : attends to
+Person &lt;|-down- Member
+Event &lt;|-- BoardMeeting
+Member &lt;|-- BoardMember
+BoardMeeting -- BoardMember : attends to
+Conference -right- BoardMeeting
+Conference -up- Person : attends to
+class AAUOC{
+newLocation(l : Location) : void
+newEvent(e : Event) : void
+newPerson(p : Person) : void
+informEvent(e : Event) : void
+register(m : Member,e : Event) : void
+}
+class Location{
+description : String
+address : String
+}
+
+class Event{
+date : Date
+description : String
+assign(l : Location) : void
+}
+
+class Person{
+name : String
+}
+
+class Member{
+e-mail : String
+}
+
+class Conference{
+max_attendees : Integer
+}
+
+@enduml</code></pre><p id="848afc0d-69f9-46c5-a493-56a444eb19f0" class=""><strong><strong><strong><strong><strong><strong><strong>Resultado: </strong></strong></strong></strong></strong></strong></strong></p><figure id="8f7b6d20-492f-41e5-9802-5e818e79303f" class="image"><a href="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%2010.png"><img style="width:781px" src="Practica%20UD%2011%20Diagramas%20UML,%20Clases%20a0810d1039b0492a9babcbde0a3f7903/Untitled%2010.png"/></a></figure><p id="b6b7e6cd-1c0f-42f7-b3c9-afc3acde1984" class="">
+</p><h2 id="3b4d8cd7-a077-403a-8831-5949426fb629" class="">4) Inclusión de la cardinalidad y navegabilidad de las relaciones</h2></div></article></body></html>
